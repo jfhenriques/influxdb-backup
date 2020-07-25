@@ -6,6 +6,7 @@
 ########################################
 
 BACKUP_DESTINATION_DIR="/mnt/backup/influxdb-backups"
+BACKUP_LATEST_REF="${BACKUP_DESTINATION_DIR}/latest.tar.xz"
 BACKUP_TMP_ROOT_DIR="/mnt/backup/tmp/influxback."
 INFLUXD="/usr/bin/influxd"
 INFLUX_DB="home_assistant"
@@ -113,6 +114,8 @@ compressed_size_bytes=$(stat -c "%s" "$TARGET_BACKUP_FILE")
 compressed_size=$(get_human_read_size "$compressed_size_bytes")
 log "Compressed filesize is: ${compressed_size}"
 
+rm -f "$BACKUP_LATEST_REF" 2>/dev/null
+cp -f "$TARGET_BACKUP_FILE" "$BACKUP_LATEST_REF" 2>/dev/null
 
 do_cleanup_exit
 
