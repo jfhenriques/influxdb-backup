@@ -89,12 +89,12 @@ for db in "$INFLUX_DB"; do
   log "Backing influxdb: $db"
 
   if [ "$INFLUX_RP" = "" ]; then
-    eval $INFLUXD backup -portable -database "$INFLUX_DB" "$BACKUP_TMP_DIR" >/dev/null || do_cleanup_exit 1 "Error Creating backup"
+    eval $INFLUXD backup -portable -database "$db" "$BACKUP_TMP_DIR" >/dev/null || do_cleanup_exit 1 "Error Creating backup"
   else
 
     for rp in $INFLUX_RP; do
       log "Backing rp: $rp"
-      eval $INFLUXD backup -portable -database "$INFLUX_DB" -retention "$rp"  "$BACKUP_TMP_DIR" >/dev/null || do_cleanup_exit 1 "Error Creating backup for rp: $rp"
+      eval $INFLUXD backup -portable -database "$db" -retention "$rp"  "$BACKUP_TMP_DIR" >/dev/null || do_cleanup_exit 1 "Error Creating backup for rp: $rp"
     done
   fi
 done
